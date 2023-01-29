@@ -1,37 +1,54 @@
 -------------------------------------------
-Source installation information for modders
+Original Workspace with changes to work in 2023
 -------------------------------------------
-This code follows the Minecraft Forge installation methodology. It will apply
-some small patches to the vanilla MCP source code, giving you and it access 
-to some of the data and functions you need to build a successful mod.
+Original source code with some changes so that it can work
 
-Note also that the patches are built against "unrenamed" MCP source code (aka
-srgnames) - this means that you will not be able to read them directly against
-normal code.
-
-Source pack installation information:
-
-Standalone source installation
+Auto Setup
+==============================
+Download this src code and run gradlew idea or gradlew eclipse
 ==============================
 
-To install this source code for development purposes, extract this zip file.
-It ships with a demonstration mod. Run 'gradlew setupDevWorkspace' to create
-a gradle environment primed with FML. Run 'gradlew eclipse' or 'gradlew idea' to
-create an IDE workspace of your choice.
-Refer to ForgeGradle for more information about the gradle environment
-Note: On macs or linux you run the './gradlew.sh' instead of 'gradlew'
+Manual Setup
+==============================
+Glossary:
+"-" = Remove
+"+" = Add
+Download the src from forge
+Go to build.gradle and modify the following:
+       -     url = "http://files.minecraftforge.net/maven" 
+       +     url = "https://maven.minecraftforge.net"
+       
+       
+       -    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+       +    dependencies {
+        classpath ('com.anatawa12.forge:ForgeGradle:1.2-1.0.+') {
 
-Forge source installation
-=========================
-MinecraftForge ships with this code and installs it as part of the forge
-installation process, no further action is required on your part.
+    changing = true
+		  }
+   }
+}
 
-For reference this is version @MAJOR@.@MINOR@.@REV@.@BUILD@ of FML
-for Minecraft version @MCVERSION@.
 
-LexManos' Install Video
-=======================
-https://www.youtube.com/watch?v=8VEdtQLuLO0&feature=youtu.be
+AFTER:
+"minecraft {
+    version = "1.7.10-10.13.4.1614-1.7.10"
+    runDir = "eclipse"
+}" 
+       +    tasks.withType(JavaCompile) {
+            options.encoding = 'UTF-8'
+            }
 
-For more details update more often refer to the Forge Forums:
-http://www.minecraftforge.net/forum/index.php/topic,14048.0.html
+NEXT go to gradle\wrapper\gradle-wrapper.properties    
+and modify:
+       -    distributionUrl=https\://services.gradle.org/distributions/gradle-2.0-bin.zip
+       +    distributionUrl=https\://services.gradle.org/distributions/gradle-4.4.1-bin.zip
+
+
+Then open a terminal and run:
+gradlew clean setDecompWorkspace (idea) or (eclipse)
+==============================
+
+
